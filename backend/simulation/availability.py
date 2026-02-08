@@ -1,7 +1,3 @@
-"""
-Availability generation based on provider profiles.
-No fixed dates or hardcoded slots; deterministic from profile and current time.
-"""
 from __future__ import annotations
 
 from datetime import datetime, timedelta
@@ -11,7 +7,6 @@ from core.schemas import AvailabilityProfile, Provider
 
 
 def _parse_time(t: str) -> Tuple[int, int]:
-    """Parse 'HH:MM' -> (hour, minute)."""
     parts = t.strip().split(":")
     h = int(parts[0]) if len(parts) > 0 else 9
     m = int(parts[1]) if len(parts) > 1 else 0
@@ -24,10 +19,6 @@ def get_available_slots(
     days_ahead: int = 14,
     duration_minutes: int | None = None,
 ) -> List[datetime]:
-    """
-    Generate available slot starts for a provider based on availability_profile.
-    No fixed dates; slots are derived from weekday_hours, weekend_enabled, slot_duration.
-    """
     profile = provider.availability_profile
     duration = duration_minutes or profile.slot_duration_minutes
     open_h, open_m = _parse_time(profile.weekday_hours[0])
@@ -53,10 +44,6 @@ def is_slot_available(
     slot: datetime,
     duration_minutes: int = 30,
 ) -> bool:
-    """
-    Check if a given slot is within provider's availability profile.
-    Used by slot validation tool; no persistence of "booked" slots in MVP (mock).
-    """
     profile = provider.availability_profile
     if slot.weekday() >= 5 and not profile.weekend_enabled:
         return False
@@ -68,5 +55,4 @@ def is_slot_available(
         return False
     if slot + timedelta(minutes=duration_minutes + profile.buffer_minutes) > end:
         return False
-    # TODO: Cross-check with actual booked slots (DB or calendar) to prevent double booking
     return True

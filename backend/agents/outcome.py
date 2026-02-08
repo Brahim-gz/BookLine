@@ -1,7 +1,3 @@
-"""
-Extract NegotiationOutcome from agent run: tool calls log and optional agent response.
-Decoupled from agent logic; pure function over structured logs.
-"""
 from __future__ import annotations
 
 from datetime import datetime
@@ -15,12 +11,6 @@ def extract_outcome(
     tool_calls_log: list[dict[str, Any]],
     agent_final_message: Optional[str] = None,
 ) -> NegotiationOutcome:
-    """
-    Build NegotiationOutcome from one agent's tool_calls_log and optional final message.
-    - proposed_slot: from last validate_slot(valid=True) or confirm_slot; or None.
-    - confidence_score: 1.0 if confirm_slot succeeded, else from validate_slot or 0.5.
-    - rejection_reasons: from tool errors or agent message hints.
-    """
     proposed_slot: Optional[datetime] = None
     confidence = 0.5
     rejection_reasons: list[str] = []

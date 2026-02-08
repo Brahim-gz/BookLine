@@ -1,7 +1,3 @@
-"""
-Slot validation and confirmation tool: check slot with provider availability, confirm booking.
-Decoupled from agent logic; explicit and logged.
-"""
 from __future__ import annotations
 
 from datetime import datetime
@@ -19,11 +15,6 @@ def validate_slot(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: validate that a proposed slot is available for the provider and user.
-    Params: provider_id, slot_iso (datetime), duration_minutes (optional).
-    Uses simulation layer for provider availability; calendar for user (mock).
-    """
     pid = params.get("provider_id")
     slot_iso = params.get("slot_iso") or params.get("slot")
     duration_minutes = int(params.get("duration_minutes", 30))
@@ -45,9 +36,6 @@ def validate_slot(
         if tool_log and task_id:
             tool_log(task_id, "validate_slot", params, out)
         return out
-    # Actual availability check is done in simulation.availability; here we do a simple mock
-    # so that the agent gets a deterministic answer. In production, this would call
-    # simulation.availability.is_slot_available(prov, slot, duration_minutes).
     from simulation.availability import is_slot_available
     valid = is_slot_available(prov, slot, duration_minutes)
     out = {
@@ -68,10 +56,6 @@ def confirm_slot(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: confirm booking of a slot (blocks slot in calendar and provider).
-    Params: provider_id, slot_iso. Returns confirmation id; TODO: calendar event id.
-    """
     pid = params.get("provider_id")
     slot_iso = params.get("slot_iso") or params.get("slot")
     if not pid or not slot_iso:
@@ -79,7 +63,6 @@ def confirm_slot(
         if tool_log and task_id:
             tool_log(task_id, "confirm_slot", params, out)
         return out
-    # TODO: Persist booking (DB or calendar API) and prevent double booking
     out = {
         "ok": True,
         "provider_id": pid,

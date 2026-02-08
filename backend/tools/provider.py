@@ -1,7 +1,3 @@
-"""
-Provider lookup tool: get provider details by id (or list all).
-Data-driven; no hardcoded provider logic.
-"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -19,10 +15,6 @@ def provider_lookup(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: get one provider by id.
-    Params: provider_id. Returns name, rating, distance_km, receptionist_style.
-    """
     pid = params.get("provider_id")
     if not pid:
         out = {"ok": False, "error": "provider_id required"}
@@ -54,10 +46,6 @@ def list_providers(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: list all providers (e.g. for swarm to know who to contact).
-    Returns list of { provider_id, name, rating, distance_km }.
-    """
     by_id = get_providers_by_id(providers_path)
     out = {
         "ok": True,

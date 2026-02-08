@@ -1,6 +1,3 @@
-"""
-Load providers from JSON. Single source of truth; no hardcoded provider list.
-"""
 from __future__ import annotations
 
 import json
@@ -11,7 +8,6 @@ from core.schemas import AvailabilityProfile, Provider
 
 
 def load_providers(path: Path) -> list[Provider]:
-    """Load and parse providers from JSON file. Returns empty list on missing/invalid file."""
     if not path.exists():
         return []
     try:
@@ -36,10 +32,8 @@ def load_providers(path: Path) -> list[Provider]:
 
 
 def get_providers_by_id(path: Path) -> dict[str, Provider]:
-    """Convenience: load providers and return dict by id."""
     return {p.id: p for p in load_providers(path)}
 
 
 def get_provider(path: Path, provider_id: str) -> Optional[Provider]:
-    """Return one provider by id."""
     return get_providers_by_id(path).get(provider_id)

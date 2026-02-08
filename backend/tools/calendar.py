@@ -1,13 +1,8 @@
-"""
-Calendar tool: query user availability and prevent double booking.
-Uses Google Calendar when credentials are configured; otherwise mock.
-"""
 from __future__ import annotations
 
 from datetime import datetime, timedelta
 from typing import Any, Callable, Optional
 
-# Type for optional callback to log tool calls (task_id -> append to log)
 ToolCallLogger = Optional[Callable[[str, str, dict[str, Any], Any], None]]
 
 
@@ -17,11 +12,6 @@ def check_availability(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: check user calendar for available slots in a date range.
-    Params: date_from (YYYY-MM-DD), date_to (YYYY-MM-DD), duration_minutes (optional).
-    Returns list of free windows; used to avoid double booking.
-    """
     date_from = params.get("date_from") or params.get("date_from_iso")
     date_to = params.get("date_to") or params.get("date_to_iso")
     duration_minutes = int(params.get("duration_minutes", 30))
@@ -47,7 +37,6 @@ def check_availability(
         else:
             raise ImportError
     except Exception:
-        # Mock: next 7 days, 9-17, 30min steps
         slots = []
         day = start.replace(hour=9, minute=0, second=0, microsecond=0)
         end_day = end.replace(hour=17, minute=0, second=0, microsecond=0)
@@ -70,10 +59,6 @@ def get_busy_windows(
     tool_log: ToolCallLogger = None,
     task_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Agentic tool: get user's busy windows (for cross-checking).
-    Params: date_from, date_to. Returns list of busy intervals.
-    """
     date_from = params.get("date_from") or params.get("date_from_iso")
     date_to = params.get("date_to") or params.get("date_to_iso")
     if not date_from or not date_to:

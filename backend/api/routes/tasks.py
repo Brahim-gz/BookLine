@@ -1,7 +1,3 @@
-"""
-Task API: start scheduling task, poll status.
-Tasks run in background (asyncio); state is stored in memory (TODO: Redis for production).
-"""
 from __future__ import annotations
 
 import asyncio
@@ -17,7 +13,6 @@ from swarm.controller import run_swarm, run_single_agent
 
 router = APIRouter()
 
-# In-memory task store; key = task_id. TODO: Replace with Redis or DB for production.
 _tasks: Dict[str, TaskState] = {}
 _tasks_lock = asyncio.Lock()
 
@@ -29,7 +24,6 @@ class TaskCreateResponse(BaseModel):
 
 
 async def _run_task(task_id: str, state: TaskState, settings: Any) -> None:
-    """Background: run single or swarm and update state."""
     raw_path = getattr(settings, "providers_json_path", None)
     path = Path(raw_path) if raw_path is not None else Path(__file__).resolve().parent.parent.parent / "data" / "providers.json"
     api_key = getattr(settings, "elevenlabs_api_key", None) or ""
@@ -78,7 +72,6 @@ async def _run_task(task_id: str, state: TaskState, settings: Any) -> None:
 
 @router.post("/", response_model=TaskCreateResponse)
 async def create_task(request: Request, body: TaskCreate) -> TaskCreateResponse:
-    """Start a scheduling task (single or swarm). Returns task_id for polling."""
     task_id = str(uuid.uuid4())
     state = TaskState(
         task_id=task_id,
@@ -91,6 +84,7 @@ async def create_task(request: Request, body: TaskCreate) -> TaskCreateResponse:
     settings = getattr(request.app.state, "settings", None)
     if not settings:
         raise HTTPException(status_code=500, detail="App settings not available")
+
     asyncio.create_task(_run_task(task_id, state, settings))
     return TaskCreateResponse(
         task_id=task_id,
@@ -101,7 +95,6 @@ async def create_task(request: Request, body: TaskCreate) -> TaskCreateResponse:
 
 @router.get("/{task_id}")
 async def get_task(request: Request, task_id: str) -> TaskState:
-    """Poll task status; returns full state including outcomes, shortlist, tool_calls_log."""
     async with _tasks_lock:
         state = _tasks.get(task_id)
     if not state:
@@ -111,7 +104,6 @@ async def get_task(request: Request, task_id: str) -> TaskState:
 
 @router.get("/")
 async def list_tasks() -> dict[str, list[dict]]:
-    """List all task ids and statuses (for debugging)."""
     async with _tasks_lock:
         items = [
             {"task_id": s.task_id, "status": s.status.value, "mode": s.mode.value}

@@ -6,6 +6,7 @@ pydantic-settings>=2.1.0
 elevenlabs>=2.34.0
 websockets>=12.0
 python-dotenv>=1.0.0
+httpx>=0.27.0
 
 # Google Calendar (optional – for real availability and booking)
 google-auth>=2.25.0

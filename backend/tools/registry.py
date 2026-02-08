@@ -1,7 +1,3 @@
-"""
-Tool registry: build ClientTools with bound context (providers path, task_id, logging).
-Decoupled from agent logic; all tools explicit and logged.
-"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -13,7 +9,7 @@ from tools import calendar, distance, provider, slots
 def _tool_log_callback(task_id: Optional[str], log_append: Optional[Callable[[dict], None]]) -> Optional[Callable[[str, str, dict, Any], None]]:
     if not task_id or not log_append:
         return None
-    def log(name: str, params: dict, result: Any) -> None:
+    def log(task_id_arg: str, name: str, params: dict, result: Any) -> None:
         log_append({"tool": name, "params": params, "result": result})
     return log
 
@@ -23,10 +19,6 @@ def build_tool_registry(
     task_id: Optional[str] = None,
     tool_calls_log: Optional[list] = None,
 ) -> dict[str, Callable[..., dict[str, Any]]]:
-    """
-    Return a dict of tool_name -> callable for registration with ElevenLabs ClientTools.
-    Each callable takes a single `params` dict (from the agent) and returns a dict.
-    """
     def append_log(entry: dict) -> None:
         if tool_calls_log is not None:
             tool_calls_log.append(entry)
@@ -70,9 +62,5 @@ def register_client_tools(
     registry: dict[str, Callable[..., dict[str, Any]]],
     is_async: bool = False,
 ) -> None:
-    """
-    Register our tools with ElevenLabs ClientTools.
-    client_tools_obj: instance of elevenlabs.conversational_ai.conversation.ClientTools
-    """
     for name, fn in registry.items():
         client_tools_obj.register(name, fn, is_async=is_async)

@@ -1,7 +1,3 @@
-"""
-Appointments API: confirm a booking from the shortlist.
-Prevents double booking by validating against task state; TODO: calendar integration.
-"""
 from __future__ import annotations
 
 from datetime import datetime, timedelta
@@ -23,10 +19,6 @@ class ConfirmResponse(BaseModel):
 
 @router.post("/confirm", response_model=ConfirmResponse)
 async def confirm_appointment(body: ConfirmAppointmentRequest) -> ConfirmResponse:
-    """
-    Confirm one of the shortlisted slots. Validates that (task_id, provider_id, slot)
-    appears in the task's shortlist to prevent double booking / invalid selection.
-    """
     async with _tasks_lock:
         state = _tasks.get(body.task_id)
     if not state:
@@ -36,7 +28,6 @@ async def confirm_appointment(body: ConfirmAppointmentRequest) -> ConfirmRespons
             status_code=400,
             detail="Task must be completed before confirming an appointment.",
         )
-    # Check slot is in shortlist
     match = None
     for s in state.shortlist:
         if s.provider_id == body.provider_id and s.slot == body.slot:

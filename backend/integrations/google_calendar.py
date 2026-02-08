@@ -1,8 +1,3 @@
-"""
-Google Calendar integration. Uses credentials from app.config.
-When credentials are set, provides freebusy and create_event; otherwise returns mock/empty.
-Requires: pip install google-auth google-api-python-client
-"""
 from __future__ import annotations
 
 from datetime import datetime, timedelta
@@ -13,7 +8,6 @@ from app.config import get_settings
 
 
 def is_google_calendar_configured() -> bool:
-    """True if Google credentials path is set and file exists."""
     s = get_settings()
     if not s.google_credentials_path:
         return False
@@ -22,7 +16,6 @@ def is_google_calendar_configured() -> bool:
 
 
 def _get_service():
-    """Build Calendar API service; returns None if not configured or import fails."""
     if not is_google_calendar_configured():
         return None
     try:
@@ -44,10 +37,6 @@ def get_freebusy(
     time_max: datetime,
     calendar_id: Optional[str] = None,
 ) -> dict[str, Any]:
-    """
-    Return free/busy info for the calendar in the given window.
-    Returns {"busy": [{"start": iso, "end": iso}, ...], "ok": True} or {"ok": False, "error": "..."}.
-    """
     service = _get_service()
     cid = calendar_id or get_settings().google_calendar_id or "primary"
     if not service:
@@ -81,7 +70,6 @@ def get_available_slots(
         return []
     busy_list = fb.get("busy") or []
     if not busy_list:
-        # No busy windows: return simple grid
         slots = []
         day = time_min.replace(hour=9, minute=0, second=0, microsecond=0)
         end_day = time_max.replace(hour=17, minute=0, second=0, microsecond=0)
@@ -94,7 +82,6 @@ def get_available_slots(
             if day.hour >= 17:
                 day = (day + timedelta(days=1)).replace(hour=9, minute=0, second=0, microsecond=0)
         return slots[:50]
-    # TODO: Merge busy windows and compute free intervals, then split into duration_minutes slots
     return []
 
 
@@ -105,9 +92,6 @@ def create_event(
     summary: str = "CallPilot appointment",
     description: str = "",
 ) -> dict[str, Any]:
-    """
-    Create a calendar event. Returns {"ok": True, "event_id": "...", "html_link": "..."} or {"ok": False, "error": "..."}.
-    """
     service = _get_service()
     cid = calendar_id or get_settings().google_calendar_id or "primary"
     if not service or not start_iso or not end_iso:
