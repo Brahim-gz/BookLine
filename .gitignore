@@ -1,0 +1,29 @@
+# Logs and debug
+*.log
+debug_session.log
+debug_log.py
+.cursor/debug.log
+.cursor/
+
+# Environment
+.env
+.env.local
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

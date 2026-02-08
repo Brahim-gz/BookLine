@@ -1,0 +1,197 @@
+[
+  {
+    "id": "dentist-001",
+    "name": "Bright Smile Dental",
+    "rating": 4.8,
+    "distance_km": 2.1,
+    "receptionist_style": "friendly",
+    "availability_profile": {
+      "weekday_hours": ["09:00", "18:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-002",
+    "name": "City Center Dental Care",
+    "rating": 4.5,
+    "distance_km": 5.0,
+    "receptionist_style": "professional",
+    "availability_profile": {
+      "weekday_hours": ["08:00", "17:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 45,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-003",
+    "name": "Family First Dentistry",
+    "rating": 4.9,
+    "distance_km": 3.2,
+    "receptionist_style": "warm",
+    "availability_profile": {
+      "weekday_hours": ["08:30", "19:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 10
+    }
+  },
+  {
+    "id": "dentist-004",
+    "name": "Metro Dental Studio",
+    "rating": 4.3,
+    "distance_km": 1.5,
+    "receptionist_style": "brief",
+    "availability_profile": {
+      "weekday_hours": ["10:00", "16:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-005",
+    "name": "Park View Dental",
+    "rating": 4.7,
+    "distance_km": 4.0,
+    "receptionist_style": "professional",
+    "availability_profile": {
+      "weekday_hours": ["09:00", "17:30"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-006",
+    "name": "Riverside Dental Clinic",
+    "rating": 4.4,
+    "distance_km": 6.2,
+    "receptionist_style": "friendly",
+    "availability_profile": {
+      "weekday_hours": ["08:00", "18:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 45,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-007",
+    "name": "Summit Dental Group",
+    "rating": 4.6,
+    "distance_km": 7.0,
+    "receptionist_style": "formal",
+    "availability_profile": {
+      "weekday_hours": ["07:30", "16:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-008",
+    "name": "Valley Dental Health",
+    "rating": 4.2,
+    "distance_km": 2.8,
+    "receptionist_style": "warm",
+    "availability_profile": {
+      "weekday_hours": ["09:00", "17:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-009",
+    "name": "Westside Dental Partners",
+    "rating": 4.85,
+    "distance_km": 5.5,
+    "receptionist_style": "professional",
+    "availability_profile": {
+      "weekday_hours": ["08:00", "19:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-010",
+    "name": "Downtown Dental Hub",
+    "rating": 4.1,
+    "distance_km": 0.8,
+    "receptionist_style": "brief",
+    "availability_profile": {
+      "weekday_hours": ["10:00", "18:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 45,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-011",
+    "name": "Greenfield Family Dental",
+    "rating": 4.75,
+    "distance_km": 4.3,
+    "receptionist_style": "friendly",
+    "availability_profile": {
+      "weekday_hours": ["08:30", "17:30"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 10
+    }
+  },
+  {
+    "id": "dentist-012",
+    "name": "Lakeside Smiles",
+    "rating": 4.55,
+    "distance_km": 8.0,
+    "receptionist_style": "warm",
+    "availability_profile": {
+      "weekday_hours": ["09:00", "16:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-013",
+    "name": "Northgate Dental",
+    "rating": 4.35,
+    "distance_km": 3.5,
+    "receptionist_style": "professional",
+    "availability_profile": {
+      "weekday_hours": ["08:00", "17:00"],
+      "weekend_enabled": false,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 0
+    }
+  },
+  {
+    "id": "dentist-014",
+    "name": "Oakwood Dental Care",
+    "rating": 4.65,
+    "distance_km": 6.5,
+    "receptionist_style": "formal",
+    "availability_profile": {
+      "weekday_hours": ["09:00", "18:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 45,
+      "buffer_minutes": 5
+    }
+  },
+  {
+    "id": "dentist-015",
+    "name": "Peak Performance Dental",
+    "rating": 4.9,
+    "distance_km": 4.8,
+    "receptionist_style": "friendly",
+    "availability_profile": {
+      "weekday_hours": ["07:00", "20:00"],
+      "weekend_enabled": true,
+      "slot_duration_minutes": 30,
+      "buffer_minutes": 5
+    }
+  }
+]

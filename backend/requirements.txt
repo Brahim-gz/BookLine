@@ -1,0 +1,12 @@
+# CallPilot backend - ElevenLabs CallPilot Challenge
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+elevenlabs>=2.34.0
+websockets>=12.0
+python-dotenv>=1.0.0
+
+# Google Calendar (optional – for real availability and booking)
+google-auth>=2.25.0
+google-api-python-client>=2.110.0
